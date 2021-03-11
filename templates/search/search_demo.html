@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+查询的名称：{{ query }}   <br>
+查询的Page对象：{{ page }}  <br>
+遍历它得到具体的model对象：
+<ul>
+    {% for item in page %}
+        <li>{{ item.object }}</li>
+    {% endfor %}
+</ul>
+<br>
+分页paginator对象：{{ paginator.num_pages }}
+</body>
+</html>
