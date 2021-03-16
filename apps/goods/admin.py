@@ -1,6 +1,5 @@
 from django.contrib import admin
 from goods.models import GoodsKind, GoodsSKU, GoodsSPU, GoodsImage, BannerList, PromotionList, PartitionList
-from celery_tasks.tasks import generate_static_index_html
 
 # Register your models here.
 

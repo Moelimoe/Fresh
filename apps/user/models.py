@@ -24,20 +24,20 @@ class User(AbstractUser, BaseModel):
 
 
 class AddressManager(models.Manager):
+    """给Address的objects添加一个获取默认地址的方法"""
     def get_default_address(self, user):
-        print('self.model:', self.model)
         try:
             # self.model方法可以获取self对象所对应的模型类，self即是AddressManager的一个实例，也即Address中的objects
-            address_info = self.get(user=user, is_default=True)
+            address_obj = self.get(foreign_user=user, is_default=True)  # （不用点objects）
         except self.model.DoesNotExist:  # self.model -> 即objects所在的类->即Address
-            address_info = None
-        return address_info
+            address_obj = None
+        return address_obj
 
 
 class Address(BaseModel):
     """地址类模型"""
     # 注：on_delete级联删除：当主键删除时，相关联的外键也会删除
-    user = models.ForeignKey("user.User", verbose_name="所属账户", on_delete=models.CASCADE)
+    foreign_user = models.ForeignKey("user.User", verbose_name="所属用户", on_delete=models.CASCADE)
     receiver = models.CharField(max_length=20, verbose_name="收件人")
     addr = models.CharField(max_length=256, verbose_name="收货地址")
     postcode = models.CharField(max_length=6, null=True, verbose_name="邮政编码")

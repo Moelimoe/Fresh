@@ -203,8 +203,8 @@ class UserInfoView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
         default_address_info = Address.objects.get_default_address(user=user)
-        con = get_redis_connection()   # 获取redis默认存储数据库的数据
-        rct_brs_gids = con.lrange(f'record_{user.id}', 0, 4)    # 获取最近浏览的5个商品记录的【id】
+        conn = get_redis_connection()   # 获取redis默认存储数据库的数据
+        rct_brs_gids = conn.lrange(f'record_{user.id}', 0, 4)    # 获取最近浏览的5个商品记录的【id】
         # rct_brs_info = GoodsSKU.objects.filter(id__in=rct_brs_gids)     # 从数据库中获取最近浏览数据（按id排序的）
         # 将浏览记录按照浏览时间排序
         rct_brs_goods = [GoodsSKU.objects.get(id=c_id) for c_id in rct_brs_gids]
@@ -263,7 +263,7 @@ class UserAddressView(LoginRequiredMixin, View):
         # 修改Manager方法后获取默认地址
         default_address_info = Address.objects.get_default_address(user=user)
         is_default = False if default_address_info else True
-        Address.objects.create(user=user, receiver=receiver, addr=address, postcode=postcode, phone=phone,
+        Address.objects.create(foreign_user=user, receiver=receiver, addr=address, postcode=postcode, phone=phone,
                                is_default=is_default)
         # ★返回应答
         return redirect(reverse('user:address'))

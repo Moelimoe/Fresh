@@ -8,7 +8,7 @@
 		<span>></span>
 		<a href="#">{{ sku.kind.kind }}</a>
 		<span>></span>
-		<a href="#">{{ sku.spuID.spu }}</a>
+		<a href="#">{{ sku.foreign_spu.spu }}</a>
 		<span>></span>
 		<a href="#">{{ sku }}</a>
 	</div>
@@ -25,7 +25,7 @@
 			<div class="goods_num clearfix">
 				<div class="num_name fl">数 量：</div>
 				<div class="num_add fl">
-					<input type="text" class="num_show fl" value="1" oninput="value=value.match('[0-9]{1,10}')">
+					<input type="text" class="num_show fl" value="0" oninput="value=value.match('[0-9]{1,10}')">
 					<a href="javascript:;" class="plus fr">+</a>
 					<a href="javascript:;" class="minus fr">-</a>	
 				</div> 
@@ -74,14 +74,14 @@
 			<div class="tab_content">
 				<dl>
 					<dt>商品详情：</dt>
-					<dd>{{ sku.spuID.detail|safe }}</dd>
+					<dd>{{ sku.foreign_spu.detail|safe }}</dd>
 				</dl>
 			</div>
 
 			<div class="tab_content">
 				{% for item in items_info %}
 				<dl>
-					<dt>评价时间：{{ item.update_time }}  用户名：{{ item.order.userID.username }}</dt>
+					<dt>评价时间：{{ item.update_time }}  用户名：{{ item.order.foreign_user.username }}</dt>
 					<dd>评论内容：{{ item.review }}</dd>
 				</dl>
 				{% endfor %}
@@ -96,13 +96,15 @@
 <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
 <script type="text/javascript">
 
+		stock = parseInt({{ sku.stock }})
 		flush_goods_amount();
 		function flush_goods_amount() {
 			// 获取单价
 			price = parseFloat($('.show_price').children('em').text());
-			// 获取选择的数量
+			// 获取选择的数量和小计
 			count = parseInt($('.num_show').val());
 			amount = (price*count).toFixed(2);
+
 			$('.total').children('em').text(amount+'元');
 		}
 		// 增加商品数量
@@ -111,6 +113,10 @@
             count = $('.num_show').val();
             // 加1
             count = parseInt(count)+1;
+			// 校验选择的数量，最大不超过现有库存
+			if (count>=stock){
+				count = stock
+			}
             // 重新设置商品的数目
             $('.num_show').val(count);
             // 更新商品的总价
@@ -120,8 +126,9 @@
 			$('.minus').click(function () {
             count = $('.num_show').val();
             count = parseInt(count)-1;
-            if (count<=1){
-            	count = 1;
+            // 检验库存不少于0
+            if (count< 1){
+            	count = 0;
             }
             $('.num_show').val(count);
             flush_goods_amount();
@@ -146,7 +153,7 @@
 		var $to_y = $('#show_count').offset().left;
 
 		$('#add_cart').click(function(){
-			// 获取商品id和商品数量
+			// 获取商品id和商品数量，如果使用下面第一条，要在add_cart增加自定义属性sku_id='sku_id'
 			// sku_id = $(this).attr('sku_id');  // 获取自定义属性用attr，获取原有属性用prop
 			sku_id = {{ sku.id }};
 			count = $('.num_show').val();

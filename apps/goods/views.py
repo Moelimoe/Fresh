@@ -13,7 +13,7 @@ from order.models import ItemsInfo
 class IndexView(View):
     """首页视图"""
     def get(self, request):
-        # cache.delete('index_cache')   # 清除缓存
+        cache.delete('index_cache')   # 清除缓存
         context = cache.get('index_cache')
         if not context:
             print("设置缓存")
@@ -26,14 +26,16 @@ class IndexView(View):
             goods_promotion = PromotionList.objects.all().order_by('index')
             # 获取分区商品信息
             # goods_partition = PartitionList.objects.all()
+            print(f'测试0{goods_kind}')
             for kind in goods_kind:
                 # 获取分区商品中文字展示信息
-                text_dis = PartitionList.objects.filter(kind=kind, display=0).order_by('index')
+                text_dis = PartitionList.objects.filter(foreign_kind=kind, display=0).order_by('index')
                 # 获取分区商品中图片展示信息
-                image_dis = PartitionList.objects.filter(kind=kind, display=1).order_by('index')
+                image_dis = PartitionList.objects.filter(foreign_kind=kind, display=1).order_by('index')
                 # 将上面的属性直接添加给GoodsKind类的kind实例，方便在模板中使用
                 kind.text_dis = text_dis
                 kind.image_dis = image_dis
+                print(f'测试{text_dis, image_dis}')
             context = {'goods_kind': goods_kind, 'goods_banner': goods_banner,
                        'goods_promotion': goods_promotion}
             cache.set('index_cache', context, 3600)
@@ -59,14 +61,15 @@ class DetailsView(View):
             sku = GoodsSKU.objects.get(id=goods_id)
         except GoodsSKU.DoesNotExist:
             return redirect(reverse('goods:index'))
+        print(f'测试库存：{sku.stock, sku.name}')
         # 获取同spu类型的商品信息，提供链接到商品规格选项下面
-        skus_of_same_spu = GoodsSKU.objects.filter(spuID=sku.spuID).exclude(id=goods_id)
+        skus_of_same_spu = GoodsSKU.objects.filter(foreign_spu=sku.foreign_spu).exclude(id=goods_id)
         # 获取分类栏的信息
         kinds = GoodsKind.objects.all()
         # 获取指定goods_id的商品的评论信息
-        items_info = ItemsInfo.objects.filter(skuID=sku.id).exclude(review='')  # 不需要空评论商品
+        items_info = ItemsInfo.objects.filter(foreign_sku=sku.id).exclude(review='')  # 不需要空评论商品
         # 获取（两条）同类型商品作为新品推荐
-        new_on_sells = GoodsSKU.objects.filter(kind=sku.kind).exclude(id=goods_id).order_by('-create_time')[:2]  # -代表逆序
+        new_on_sells = GoodsSKU.objects.filter(foreign_kind=sku.foreign_kind).exclude(id=goods_id).order_by('-create_time')[:2]  # -代表逆序
         # 获取购物车中商品的数目
         nums_in_cart = 0
         user = request.user
@@ -105,12 +108,12 @@ class ListView(View):
         # 对获取到的商品对象执行排序-->默认or价格or人气（销量）
         sort = request.GET.get('sort')
         if sort == 'hot':
-            skus = GoodsSKU.objects.filter(kind=kind).order_by('-sales_volume')
+            skus = GoodsSKU.objects.filter(foreign_kind=kind).order_by('-sales_volume')
         elif sort == 'price':
-            skus = GoodsSKU.objects.filter(kind=kind).order_by('price')
+            skus = GoodsSKU.objects.filter(foreign_kind=kind).order_by('price')
         else:
             sort = 'default'
-            skus = GoodsSKU.objects.filter(kind=kind).order_by('id')  # 默认用id排序
+            skus = GoodsSKU.objects.filter(foreign_kind=kind).order_by('id')  # 默认用id排序
 
         # 对排好序的对象分页
         paginator = Paginator(skus, 1)
@@ -132,7 +135,7 @@ class ListView(View):
             pages = range(page-2, page+3)
 
         # 获取（2条）推荐的新品信息和购物车商品数目（同details）
-        new_on_sells = GoodsSKU.objects.filter(kind=kind).order_by('-create_time')[:2]  # -代表逆序
+        new_on_sells = GoodsSKU.objects.filter(foreign_kind=kind).order_by('-create_time')[:2]  # -代表逆序
         # 获取购物车中商品的数目
         nums_in_cart = 0
         user = request.user

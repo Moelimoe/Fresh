@@ -29,7 +29,7 @@
 		<div class="slide fl">
 			<ul class="slide_pics">
 				{% for banner in goods_banner %}
-                    <li><a href="{% url 'goods:details' banner.skuID.id %}"><img src="{{ banner.image.url }}" alt="轮播商品"></a></li>
+                    <li><a href="{% url 'goods:details' banner.foreign_kind.id %}"><img src="{{ banner.image.url }}" alt="轮播商品"></a></li>
 				{% endfor %}
 			</ul>
 			<div class="prev"></div>
@@ -50,7 +50,7 @@
 				<div class="subtitle fl">
 					<span>|</span>
 					{% for text in kind.text_dis %}
-						<a href="{% url 'goods:details' text.skuID.id %}">{{ text.skuID.name }}</a>
+						<a href="{% url 'goods:details' text.foreign_sku.id %}">{{ text.foreign_sku.name }}</a>
 					{% endfor %}
 				</div>
 				<a href="#" class="goods_more fr" id="fruit_more">查看更多 ></a>
@@ -61,9 +61,9 @@
 				<ul class="goods_list fl">
 					{% for image in kind.image_dis %}
 						<li>
-							<h4><a href="{% url 'goods:details' image.skuID.id %}">{{ image.skuID.name }}</a></h4>
-							<a href="{% url 'goods:details' image.skuID.id %}"><img src="{{ image.skuID.image.url }}"></a>
-							<div class="price">¥ {{ image.skuID.price }}</div>
+							<h4><a href="{% url 'goods:details' image.foreign_sku.id %}">{{ image.foreign_sku.name }}</a></h4>
+							<a href="{% url 'goods:details' image.foreign_sku.id %}"><img src="{{ image.foreign_sku.image.url }}"></a>
+							<div class="price">¥ {{ image.foreign_sku.price }}</div>
 						</li>
 					{% endfor %}
 				</ul>

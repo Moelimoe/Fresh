@@ -1,9 +1,9 @@
 {% extends 'base_no_cart.html' %}
 {% load static %}
 {% block title %}天天生鲜-购物车{% endblock title %}
-{% block page_title %}{% endblock page_title %}
+{% block page_title %}购物车{% endblock page_title %}
 {% block body %}
-	<div class="total_count">全部商品<em>{{ total }}</em>件</div>
+	<div class="total">全部商品<em>{{ total }}</em>件</div>
 	<ul class="cart_list_th clearfix">
 		<li class="col01">商品名称</li>
 		<li class="col02">商品单位</li>
@@ -12,31 +12,37 @@
 		<li class="col05">小计</li>
 		<li class="col06">操作</li>
 	</ul>
-	{% for sku in skus %}
-	<ul class="cart_list_td clearfix">
-		<li class="col01"><input type="checkbox" name="" checked></li>
-		<li class="col02"><img src="{{ sku.image.url }}"></li>
-		<li class="col03">{{ sku.name }}<br><em>{{ sku.price }}/{{ sku.unit }}</em></li>
-		<li class="col04">{{ sku.unit }}</li>
-		<li class="col05">{{ sku.unit }}</li>
-		<li class="col06">
-			<div class="num_add">
-				<a href="javascript:;" class="add fl">+</a>
-				<input type="text" class="num_show fl" value="{{ sku.count }}">
-				<a href="javascript:;" class="minus fl">-</a>	
-			</div>
-		</li>
-		<li class="col07">{{ sku.amount }}</li>
-		<li class="col08"><a href="javascript:;">删除</a></li>
-	</ul>
-	{% endfor %}
 
-	<ul class="settlements">
-		<li class="col01"><input type="checkbox" name="" checked=""></li>
-		<li class="col02">全选</li>
-		<li class="col03">合计(不含运费)：<span>¥</span><em>{{ aggregate_amount }}</em><br>共计<b>{{ total }}</b>件商品</li>
-		<li class="col04"><a href="place_order.html">去结算</a></li>
-	</ul>
+	<form method="post" action="/order/checkout/">
+		{% csrf_token %}
+		{% for sku in skus %}
+		<ul class="cart_list_td clearfix">
+			<li class="col01"><input type="checkbox" name="sku_ids" value="{{ sku.id }}" checked></li>
+			<li class="col02"><img src="{{ sku.image.url }}"></li>
+			<li class="col03">{{ sku.name }}<br><em>{{ sku.price }}/{{ sku.unit }}</em></li>
+			<li class="col04">{{ sku.unit }}</li>
+			<li class="col05">{{ sku.price }}</li>
+			<li class="col06">
+				<div class="num_add">
+					<a href="javascript:;" class="plus fl">+</a>
+					<input type="text" class="num_show fl" sku_id="{{ sku.id }}" sku_stock="{{ sku.stock }}" value="{{ sku.count }}"
+						   oninput="value=value.match('[0-9]{1,10}')">
+					<a href="javascript:;" class="minus fl">-</a>
+				</div>
+			</li>
+			<li class="col07">{{ sku.amount }}元</li>
+			<li class="col08"><a href="javascript:;">删除</a></li>
+		</ul>
+		{% endfor %}
+
+
+		<ul class="settlements">
+			<li class="col01"><input type="checkbox" name="" checked=""></li>
+			<li class="col02">全选</li>
+			<li class="col03">合计(不含运费)：<span>¥</span><em>{{ aggregate_amount }}</em><br>已选中共计<b>{{ total }}</b>件商品</li>
+			<li class="col04"><input type="submit" value="去结算"></li>
+		</ul>
+	</form>
 {% endblock body %}
 
 
@@ -45,10 +51,9 @@
     <script>
     // 计算被选中的商品的总件数和总价格
     function update_page_info() {
-        // 获取所有被选中的商品的checkbox
-        // 获取所有被选中的商品所在的ul元素
-        total_count = 0
-        total_price = 0
+        total = 0
+        aggregate_amount = 0
+        // 获取所有被选中的商品的checkbox和ul元素
         $('.cart_list_td').find(':checked').parents('ul').each(function () {
             // 获取商品的数目和小计
             count = $(this).find('.num_show').val()
@@ -56,12 +61,12 @@
             // 累加计算商品的总件数和总价格
             count = parseInt(count)
             amount = parseFloat(amount)
-            total_count += count
-            total_price += amount
+            total += count
+            aggregate_amount += amount
         })
         // 设置被选中的商品的总件数和总价格
-        $('.settlements').find('em').text(total_price.toFixed(2))
-        $('.settlements').find('b').text(total_count)
+        $('.settlements').find('em').text(aggregate_amount.toFixed(1))	//
+        $('.settlements').find('b').text(total.toFixed(1))
     }
 
     // 计算商品的小计
@@ -72,7 +77,7 @@
         // 计算商品的小计
         amount = parseInt(count)*parseFloat(price)
         // 设置商品的小计
-        sku_ul.children('.col07').text(amount.toFixed(2)+'元')
+        sku_ul.children('.col07').text(amount.toFixed(1)+'元')  //
     }
 
     // 商品的全选和全不选
@@ -88,11 +93,11 @@
         update_page_info()
     })
 
-    // 商品对应的checkbox状态发生改变时，设置全选checkbox的状态
+    // 商品对应的checkbox状态发生改变时，设置全选checkbox的状态（有一个取消勾选则全选应取消勾选）
     $('.cart_list_td').find(':checkbox').change(function () {
-        // 获取页面上所有商品的数目
+        // 获取页面上所有商品的数目，这里是根据勾选数量是否小于商品数目来确定全选是否勾选
         all_len = $('.cart_list_td').length
-        // 获取页面上被选中的商品的数目
+        // 找到（find）页面上所有已被选中的商品的数目
         checked_len = $('.cart_list_td').find(':checked').length
         is_checked = true
         if (checked_len < all_len){
@@ -103,8 +108,10 @@
         update_page_info()
     })
 
+
+//  以下涉及与后台交互
     // 更新购物车中商品的数量
-    error_update = false
+    failed_update = false
     total = 0
     function update_remote_cart_info(sku_id, count) {
         csrf = $('input[name="csrfmiddlewaretoken"]').val()
@@ -112,18 +119,18 @@
         params = {'sku_id':sku_id, 'count':count, 'csrfmiddlewaretoken':csrf}
         // 设置ajax请求为同步
         $.ajaxSettings.async = false
-        // 发起ajax post请求，访问/cart/update, 传递参数:sku_id count
+        // 发起ajax post请求，访问/cart/update/, 传递参数:sku_id count
         // 默认发起的ajax请求都是异步的，不会等回调函数执行
-        $.post('/cart/update', params, function (data) {
+        $.post('/cart/update/', params, function (data) {
             if (data.res == 5){
                 // 更新成功
-                error_update = false
-                total = data.total_count
+                failed_update = false
+                total = data.total
             }
             else{
                 // 更新失败
-                error_update = true
-                alert(data.errmsg)
+                failed_update = true
+                alert(data.err_msg)
             }
         })
         // 设置ajax请求为异步
@@ -131,19 +138,28 @@
     }
 
     // 购物车商品数量的增加
-    $('.add').click(function () {
+    $('.plus').click(function () {
         // 获取商品的id和商品的数量
-        sku_id = $(this).next().attr('sku_id')
+        // $.this是点击的标签，plus的next是num_show（数量），attr=sku是在标签内自定义的sku = {{ 'sku_id' }}
+        sku_id = $(this).next().attr('sku_id')  // 如果使用这一句，要自定义标签sku = {{ 'sku_id' }}
         count = $(this).next().val()
+		stock = parseInt($(this).next().attr('sku_stock'))
 
-        // 组织参数
-        count = parseInt(count)+1
+		// 校验选择的数量，最大不超过现有库存
+		if (count>=stock){
+			return
+		}
+
+		count = parseInt(count)+1
+
+		$('.this').val(count)
+
 
         // 更新购物车记录
         update_remote_cart_info(sku_id, count)
 
         // 判断更新是否成功
-        if (error_update == false){
+        if (failed_update == false){
             // 重新设置商品的数目
             $(this).next().val(count)
             // 计算商品的小计
@@ -155,7 +171,7 @@
                 update_page_info()
             }
             // 更新页面上购物车商品的总件数
-            $('.total_count').children('em').text(total)
+            $('.total').children('em').text(total)
         }
     })
 
@@ -165,7 +181,7 @@
         sku_id = $(this).prev().attr('sku_id')
         count = $(this).prev().val()
 
-        // 校验参数
+        // 数量应该大于等于1
         count = parseInt(count)-1
         if (count <= 0){
             return
@@ -175,7 +191,7 @@
         update_remote_cart_info(sku_id, count)
 
         // 判断更新是否成功
-        if (error_update == false){
+        if (failed_update == false){
             // 重新设置商品的数目
             $(this).prev().val(count)
             // 计算商品的小计
@@ -186,8 +202,9 @@
                 // 更新页面信息
                 update_page_info()
             }
-            // 更新页面上购物车商品的总件数
-            $('.total_count').children('em').text(total)
+            // 减少页面上购物车商品的总件数
+
+            $('.total').children('em').text(total)
         }
     })
 
@@ -202,20 +219,21 @@
         // 获取商品的id和商品的数量
         sku_id = $(this).attr('sku_id')
         count = $(this).val()
+		stock = parseInt($(this).attr('sku_stock'))
 
-        // 校验参数
-        if (isNaN(count) || count.trim().length==0 || parseInt(count)<=0){
-            // 设置商品的数目为用户输入之前的数目
-            $(this).val(pre_count)
-            return
-        }
+		// 校验参数的功能已经在输入标签那里设定了，因此这一段不需要
+
+		// 校验选择的数量，最大不超过现有库存
+		if (count>stock){
+			count = stock
+		}
+		$('.this').val(count)
 
         // 更新购物车中的记录
-        count = parseInt(count)
         update_remote_cart_info(sku_id, count)
 
         // 判断更新是否成功
-        if (error_update == false){
+        if (failed_update == false){
             // 重新设置商品的数目
             $(this).val(count)
             // 计算商品的小计
@@ -226,29 +244,29 @@
                 // 更新页面信息
                 update_page_info()
             }
-            // 更新页面上购物车商品的总件数
-            $('.total_count').children('em').text(total)
+			// 更新页面上购物车商品的总件数
+            $('.total').children('em').text(total)
         }
         else{
             // 设置商品的数目为用户输入之前的数目
             $(this).val(pre_count)
         }
-    })
+    });
 
     // 删除购物车中的记录
     $('.cart_list_td').children('.col08').children('a').click(function () {
         // 获取对应商品的id
         sku_id = $(this).parents('ul').find('.num_show').attr('sku_id')
-        csrf = $('input[name="csrfmiddlewaretoken"]').val()
+        csrf = $('input[name="csrfmiddlewaretoken"]').val()	 // 可以用{{ csrf_token }}?
         // 组织参数
         params = {'sku_id':sku_id, 'csrfmiddlewaretoken':csrf}
         // 获取商品所在的ul元素
         sku_ul = $(this).parents('ul')
-        // 发起ajax post请求， 访问/cart/delete, 传递参数:sku_id
-        $.post('/cart/delete', params, function (data) {
-            if (data.res == 3){
+        // 发起ajax post请求， 访问/cart/delete/, 传递参数:sku_id
+        $.post('/cart/delete/', params, function (data) {
+            if (data.res == 2){
                 // 删除成功，异常页面上商品所在的ul元素
-                sku_ul.remove()
+                sku_ul.remove()  // remove递归删除，empty()删除子元素
                 // 获取sku_ul中商品的选中状态
                 is_checked = sku_ul.find(':checkbox').prop('checked')
                 if (is_checked){
@@ -256,10 +274,10 @@
                     update_page_info()
                 }
                 // 重新设置页面上购物车中商品的总件数
-                $('.total_count').children('em').text(data.total_count)
+                $('.total').children('em').text(data.total)
             }
             else{
-                alert(data.errmsg)
+                alert(data.err_msg)
             }
         })
     })

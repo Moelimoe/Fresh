@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'dailyfresh.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
+        'NAME': 'fresh',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': '192.168.43.99',
@@ -192,7 +192,7 @@ BROKER = 'redis://192.168.43.99:6379/0'
 HAYSTACK_CONNECTIONS = {
     'default': {
         # 使用whoosh引擎（从whoosh_backend.py中添加了中文分词ChineseAnalyzer方法，并新建到whoosh_cn_backend.py）
-        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',   # whoosh_backend替换成了新建的whoosh_cn_backend
         # 索引文件路径
         'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
     }

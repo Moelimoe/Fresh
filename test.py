@@ -37,13 +37,24 @@ dcd = pswd.decode()  # decode之前是bytes类，decode之后是str
 #     print(__name__)
 
 
-print(int('0xb2', 16))
+# print(int('0xb2', 16))
+#
+# import re
+# phone = '19286401245 '
+# if re.match(r'1[3|4|5|7|8|9][0-9]{9}$', phone):
+#     print(True)
+# # print(re.match(r'1[3|4|5|7|8|9][0-9]{9}$', phone).group())
+#
+# al = [1, 2, 3]
+# print([i for i in al])
+#
+# print(sum(i for i in range(5)))
+#
+# print(b'a'.decode())
+# print(b'1'.decode())
+# print('a'.encode())
 
-import re
-phone = '19286401245 '
-if re.match(r'1[3|4|5|7|8|9][0-9]{9}$', phone):
-    print(True)
-# print(re.match(r'1[3|4|5|7|8|9][0-9]{9}$', phone).group())
 
-al = [1, 2, 3]
-print([i for i in al])
+a = '123'
+b = '2'
+print(a-b)

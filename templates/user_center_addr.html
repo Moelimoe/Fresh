@@ -4,11 +4,13 @@
 				<h3 class="common_title2">收货地址</h3>
 				<div class="site_con">
 					<dl>
+
 						<dt>默认收货地址：</dt>
 						{% if address_info %}
-						<dd>{{ address_info.addr }} （{{ address_info.receiver }} 收） {{ address_info.phone }}</dd>
+							<dd><input type="radio" name="addr"><label>{{ address_info.addr }}
+								（{{ address_info.receiver }} 收） {{ address_info.phone }}</label></dd>
 						{% else %}
-						<dd>无默认收货地址</dd>
+							<dd>无默认收货地址</dd>
 						{% endif %}
 					</dl>					
 				</div>
