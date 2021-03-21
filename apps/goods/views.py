@@ -67,7 +67,9 @@ class DetailsView(View):
         # 获取分类栏的信息
         kinds = GoodsKind.objects.all()
         # 获取指定goods_id的商品的评论信息
+        print(f'{sku.id}')
         items_info = ItemsInfo.objects.filter(foreign_sku=sku.id).exclude(review='')  # 不需要空评论商品
+        print(f'获取非空评商品：{items_info}')
         # 获取（两条）同类型商品作为新品推荐
         new_on_sells = GoodsSKU.objects.filter(foreign_kind=sku.foreign_kind).exclude(id=goods_id).order_by('-create_time')[:2]  # -代表逆序
         # 获取购物车中商品的数目
@@ -120,7 +122,7 @@ class ListView(View):
         # 用户输入页码防错（在url中已经规定了page必须是int型）（无法输入-1这类会被视为字符串）
         page = min(page, paginator.num_pages)
         skus_in_page = paginator.page(page)     # 包含第page页的所有商品对象（类型为Page）
-        # 实现列表页上最多显示5个页码：显示当前页+前两页+后两页
+        # 实现列表页上最多显示5个页码：显示前两页+当前页+后两页
         # 1.总页数小于5：显示所有页
         # 2.页码page<3为前2页，显示前5页
         # 3.页面page为后2页，显示后5页

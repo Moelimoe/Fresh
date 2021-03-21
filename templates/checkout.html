@@ -62,7 +62,7 @@
 			<div class="settle_con">
 				<div class="total_goods_count">共<em>{{ total }}</em>件商品，总金额<b>{{ aggregate_amount }}元</b></div>
 				<div class="transit">运费：<b>{{ exp_charge }}元</b></div>
-				<div class="total_pay">实付款：<b>{{ paying_amount }}元</b></div>
+				<div class="total_pay">实付款：<b>{{ amount_to_pay }}元</b></div>
 			</div>
 		</div>
 		{% csrf_token %}
@@ -99,23 +99,21 @@
 						'csrfmiddlewaretoken': csrf}
 			$.post('/order/commit/', params, function(data){
 				if (data.res==5){
-					alert("创建成功");
+<!--					alert("创建成功");-->
+					localStorage.setItem('order_finish',2);
+					$('.popup_con').fadeIn('fast', function() {
+						setTimeout(function(){
+							$('.popup_con').fadeOut('fast',function(){
+								window.location.href = '/user/order/1/';	 // 提交订单成功3秒后跳转到用户订单页面
+							});
+						},3000)
+					});
 				}
 				else{
 					alert(data.err_msg);
 				}
 			});
-<!--			localStorage.setItem('order_finish',2);-->
 
-<!--			$('.popup_con').fadeIn('fast', function() {-->
-
-<!--				setTimeout(function(){-->
-<!--					$('.popup_con').fadeOut('fast',function(){-->
-<!--						window.location.href = 'index_2.html';-->
-<!--					});	-->
-<!--				},3000)-->
-<!--				-->
-<!--			});-->
 		});
 	</script>
 {% endblock bottomfiles %}

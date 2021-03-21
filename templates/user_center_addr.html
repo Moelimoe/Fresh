@@ -1,4 +1,6 @@
 {% extends 'base_user_center.html' %}
+{% block title%}天天生鲜-用户地址{% endblock title %}
+{% block page_title %} 用户地址 {% endblock page_title %}
 {% block right_content %}
 		<div class="right_content clearfix">
 				<h3 class="common_title2">收货地址</h3>
@@ -38,6 +40,6 @@
 						<input type="submit" name="" value="提交" class="info_submit">
 					</form>
 				</div>
-			{{ errmsg }}
+			{{ err_msg }}
 		</div>
 {% endblock right_content %}

@@ -1,75 +1,98 @@
 {% extends 'base_user_center.html' %}
 {% load static %}
+{% block title%}天天生鲜-用户订单{% endblock title %}
+{% block page_title %} 用户订单 {% endblock page_title %}
 {% block right_content %}
 		<div class="right_content clearfix">
+				{% csrf_token %}
 				<h3 class="common_title2">全部订单</h3>
-				<ul class="order_list_th w978 clearfix">
-					<li class="col01">2016-8-21 17:36:24</li>
-					<li class="col02">订单号：56872934</li>
-					<li class="col02 stress">未支付</li>		
-				</ul>
+				{% for order in orders_in_page %}
+					<ul class="order_list_th w978 clearfix">
+						<li class="col01">{{ order.create_time }}</li>
+						<li class="col02">订单号：{{ order.order_id }}</li>
+						<li class="col02 stress">支付方式：{{ order.payment_modes|get_item:order.checkout_mode }}</li>
+					</ul>
+					<table class="order_list_table w980">
+						<tbody>
+							<tr>
+								<td width="55%">
+									{% for sku in order.skus_li %}
+									<ul class="order_goods_list clearfix">
+										<li class="col01"><img src="{{ sku.image.url }}"></li>
+										<li class="col02">{{ sku.name }}<em>{{ sku.price }}元/{{ sku.unit }}</em></li>
+										<li class="col03">{{ sku.count }}</li>
+										<li class="col04">{{ sku.price }}元</li>
+									</ul>
+									{% endfor %}
+								</td>
+								<td width="15%">{{ order.aggregate_amount }}元<br>（运费：{{ order.exp_charge }}元）</td>
+								<td width="15%">{{ order.status_choices|get_item:order.order_status }}</td>
+								<td width="15%">
+									<a href="#" status="{{ order.order_status }}" order_id="{{ order.order_id }}" class="oper_btn">
+									{{ order.status_choices|get_item:order.order_status }}</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				{% endfor %}
+				<div class="pagination">
+				{% if orders_in_page.has_previous %}
+					<a href="{% url 'user:order' orders_in_page.previous_page_number %}">上一页</a>
+				{% endif %}
 
-				<table class="order_list_table w980">
-					<tbody>
-						<tr>
-							<td width="55%">
-								<ul class="order_goods_list clearfix">					
-									<li class="col01"><img src="{% static 'images/goods02.jpg' %}"></li>
-									<li class="col02">嘎啦苹果嘎啦苹果<em>11.80元/500g</em></li>	
-									<li class="col03">1</li>
-									<li class="col04">11.80元</li>	
-								</ul>
-								<ul class="order_goods_list clearfix">					
-									<li class="col01"><img src="{% static 'images/goods02.jpg' %}"></li>
-									<li class="col02">嘎啦苹果嘎啦苹果<em>11.80元/500g</em></li>	
-									<li class="col03">1</li>
-									<li class="col04">11.80元</li>	
-								</ul>
-							</td>
-							<td width="15%">33.60元</td>
-							<td width="15%">待付款</td>
-							<td width="15%"><a href="#" class="oper_btn">去付款</a></td>
-						</tr>
-					</tbody>
-				</table>
-				
-				<ul class="order_list_th w978 clearfix">
-					<li class="col01">2016-8-21 17:36:24</li>
-					<li class="col02">订单号：56872934</li>
-					<li class="col02 stress">已支付</li>			
-				</ul>
-				<table class="order_list_table w980">
-					<tbody>
-						<tr>
-							<td width="55%">
-								<ul class="order_goods_list clearfix">					
-									<li class="col01"><img src="{% static 'images/goods02.jpg' %}"></li>
-									<li class="col02">嘎啦苹果嘎啦苹果<em>11.80元/500g</em></li>	
-									<li class="col03">1</li>
-									<li class="col04">11.80元</li>	
-								</ul>
-								<ul class="order_goods_list clearfix">					
-									<li class="col01"><img src="{% static 'images/goods02.jpg' %}"></li>
-									<li class="col02">嘎啦苹果嘎啦苹果<em>11.80元/500g</em></li>	
-									<li class="col03">1</li>
-									<li class="col04">11.80元</li>	
-								</ul>
-							</td>
-							<td width="15%">33.60元</td>
-							<td width="15%">已付款</td>
-							<td width="15%"><a href="#" class="oper_btn">查看物流</a></td>
-						</tr>
-					</tbody>
-				</table>
+				{% for page_number in pages %}
+					{% if page_number == orders_in_page.number %}
+						<a href="{% url 'user:order' page_number %}" class="active">{{ page_number }}</a>
+					{% else %}
+						<a href="{% url 'user:order' page_number %}">{{ page_number }}</a>
+					{% endif %}
+				{% endfor %}
 
-				<div class="pagenation">
-					<a href="#">上一页</a>
-					<a href="#" class="active">1</a>
-					<a href="#">2</a>
-					<a href="#">3</a>
-					<a href="#">4</a>
-					<a href="#">5</a>
-					<a href="#">下一页></a>
+				{% if orders_in_page.has_next %}
+					<a href="{% url 'user:order' orders_in_page.next_page_number %}">下一页></a>
+				{% endif %}
 				</div>
 		</div>
 {% endblock right_content %}
+{% block bottomfiles %}
+	<script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+	<script>
+	$('.oper_btn').click(function () {
+		// 获取当前order的支付状态
+		status = $(this).attr('status');
+		order_id = $(this).attr('order_id');
+		// 捕获待支付的订单支付状态，执行跳转
+		if (status == 1){	// 支付状态为未支付（1）时则执行支付操作
+			csrf = $('input[name="csrfmiddlewaretoken"]').val();
+			params = {'order_id': order_id, 'csrfmiddlewaretoken': csrf};
+			// post 发起请求，访问order/pay并传递参数集合params，（得到后端视图返回的data）
+			$.post('/order/pay/', params, function(data){
+				if (data.res == 3){
+					// 新建窗口打开网页
+					window.open(data.payment_url);
+					// 查询交易结果
+					// ajax post请求，向后端发送参数order_id，执行查询
+					$.post('/order/query/', params, function(data){
+						if (data.res == 3){
+							alert("支付成功");
+							location.reload();
+						}
+						else{
+							alert(data.err_msg);  // 支付失败
+						}
+					});
+				}
+				else{
+					alert(data.err_msg);
+				}
+			});
+		}
+		else if (status == 4){	// 订单为待评价状态
+			location.href = '/order/review/'+order_id; // 跳转到评价页面
+		}
+		else{
+			alert("订单已完成状态");
+		}
+	});
+	</script>
+{% endblock %}

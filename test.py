@@ -53,8 +53,17 @@ dcd = pswd.decode()  # decode之前是bytes类，decode之后是str
 # print(b'a'.decode())
 # print(b'1'.decode())
 # print('a'.encode())
+from dailyfresh import settings
+import os
+
+print(settings.BASE_DIR)
+base_dir = os.path.join(settings.BASE_DIR + r'\apps\order', r'alipay_public_key.pem')
+print(base_dir)
+rcv = open(r'E:\ProgramNotes\Django项目练习\fresh\apps\order\alipay_public_key.pem').read()
+print(r'E:\ProgramNotes\Django项目练习\fresh\apps\order\alipay_public_key.pem')
+# print(rcv)
+
+base = app_private_key_path = settings.BASE_DIR + r'\order\app_private_key.pem'
+print(base)
 
 
-a = '123'
-b = '2'
-print(a-b)

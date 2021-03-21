@@ -2,6 +2,8 @@
 <project version="4">
   <component name="Encoding" addBOMForNewFiles="with BOM">
     <file url="file://$PROJECT_DIR$/apps/cart/views.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/apps/order/alipay_public_key.pem" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/apps/order/app_private_key.pem" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/apps/order/views.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/search/indexes/goods/GoodsSKU_text.txt" charset="GBK" />
   </component>

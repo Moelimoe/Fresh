@@ -2,43 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a195c31-1d69-4c63-9ad1-75e7f72bacab" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/checkout.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/cart/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/cart/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/cart/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/cart/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/goods/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/goods/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/goods/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/goods/migrations/0002_auto_20210302_1521.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/goods/migrations/0003_auto_20210303_2142.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/goods/migrations/0004_auto_20210304_1359.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/goods/migrations/0005_goodsdetail.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/goods/migrations/0006_delete_goodsdetail.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/goods/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/goods/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/goods/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/goods/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/order/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/order/migrations/0002_auto_20210227_1533.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/order/migrations/0003_auto_20210302_1521.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/order/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/order/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/order/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/order/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/order/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/order/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/user/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/user/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/user/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/user/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dailyfresh/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dailyfresh/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base_user_center.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base_user_center.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/checkout.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/checkout.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/details.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/user_center_addr.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_center_addr.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user_center_info.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_center_info.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user_center_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_center_order.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test1.py" beforeDir="false" afterPath="$PROJECT_DIR$/test1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/whoosh_index/MAIN_o8j4es3y2sqzk8rv.seg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/whoosh_index/MAIN_stqmb9r0jsw6rn4k.seg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/whoosh_index/MAIN_ugg56bzmbjbarcw0.seg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/whoosh_index/_MAIN_13.toc" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +49,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectId" id="1nHTUqRWVBt9PPk2sj85GBAw6ja" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -81,24 +64,24 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/apps/order" />
     <property name="run.code.analysis.last.selected.profile" value="aDefault" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\ProgramNotes\Django项目练习\fresh\templates" />
-      <recent name="E:\ProgramNotes\Django项目练习\fresh\templates\search" />
-      <recent name="E:\ProgramNotes\Django项目练习\fresh\apps\utils\fdfs" />
-      <recent name="E:\ProgramNotes\Django项目练习\fresh\apps\utils" />
-      <recent name="E:\ProgramNotes\Django项目练习\fresh\static" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\ProgramNotes\Django项目练习\fresh\static" />
       <recent name="E:\ProgramNotes\Django项目练习\fresh\static\html_bk" />
       <recent name="E:\ProgramNotes\Django项目练习\fresh\templates" />
       <recent name="E:\ProgramNotes\Django项目练习\fresh" />
       <recent name="E:\ProgramNotes\Django项目练习\fresh\apps" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\ProgramNotes\Django项目练习\fresh\apps\order" />
+      <recent name="E:\ProgramNotes\Django项目练习\fresh\templates" />
+      <recent name="E:\ProgramNotes\Django项目练习\fresh\templates\search" />
+      <recent name="E:\ProgramNotes\Django项目练习\fresh\apps\utils\fdfs" />
+      <recent name="E:\ProgramNotes\Django项目练习\fresh\apps\utils" />
     </key>
   </component>
   <component name="RunManager" selected="Python.test">
@@ -209,10 +192,10 @@
     </configuration>
     <list>
       <item itemvalue="Python.fdfs_test" />
+      <item itemvalue="Python.manage" />
       <item itemvalue="Python.test1" />
       <item itemvalue="Python.test" />
       <item itemvalue="Python.views (1)" />
-      <item itemvalue="Python.manage" />
     </list>
     <recent_temporary>
       <list>
@@ -248,6 +231,9 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.ini" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="552" y="178" key="#Notifications" timestamp="1615653343286">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -257,10 +243,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615653032198" />
-    <state x="694" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1614321891595">
+    <state x="694" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1616312297434">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="694" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1614321891595" />
+    <state x="694" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1616312297434" />
     <state x="714" y="389" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1614321938076">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -269,46 +255,46 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1614781441505" />
-    <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1615875872531">
+    <state width="1899" height="348" key="GridCell.Tab.0.bottom" timestamp="1616118576085">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1615875872531" />
-    <state width="1899" height="282" key="GridCell.Tab.0.center" timestamp="1615875872531">
+    <state width="1899" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1616118576085" />
+    <state width="1899" height="348" key="GridCell.Tab.0.center" timestamp="1616118576085">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1615875872531" />
-    <state width="1899" height="282" key="GridCell.Tab.0.left" timestamp="1615875872531">
+    <state width="1899" height="348" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1616118576085" />
+    <state width="1899" height="348" key="GridCell.Tab.0.left" timestamp="1616118576085">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1615875872531" />
-    <state width="1899" height="282" key="GridCell.Tab.0.right" timestamp="1615875872531">
+    <state width="1899" height="348" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1616118576085" />
+    <state width="1899" height="348" key="GridCell.Tab.0.right" timestamp="1616118576085">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1615875872531" />
-    <state width="1899" height="348" key="GridCell.Tab.1.bottom" timestamp="1615811442280">
+    <state width="1899" height="348" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1616118576085" />
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom" timestamp="1616118576085">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1615811442280" />
-    <state width="1899" height="348" key="GridCell.Tab.1.center" timestamp="1615811442280">
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1616118576085" />
+    <state width="1899" height="348" key="GridCell.Tab.1.center" timestamp="1616118576085">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1615811442280" />
-    <state width="1899" height="348" key="GridCell.Tab.1.left" timestamp="1615811442280">
+    <state width="1899" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1616118576085" />
+    <state width="1899" height="348" key="GridCell.Tab.1.left" timestamp="1616118576085">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1615811442280" />
-    <state width="1899" height="348" key="GridCell.Tab.1.right" timestamp="1615811442280">
+    <state width="1899" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1616118576085" />
+    <state width="1899" height="348" key="GridCell.Tab.1.right" timestamp="1616118576085">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1615811442280" />
-    <state x="229" y="142" width="1417" height="722" key="SettingsEditor" timestamp="1615704942498">
+    <state width="1899" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1616118576085" />
+    <state x="229" y="142" width="1417" height="722" key="SettingsEditor" timestamp="1616312448029">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="229" y="142" width="1417" height="722" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1615704942498" />
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1615811465541">
+    <state x="229" y="142" width="1417" height="722" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1616312448029" />
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1616312347956">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615811465541" />
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1616312347956" />
     <state x="724" y="204" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1614523549376">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
